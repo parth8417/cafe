@@ -1,0 +1,677 @@
+:root {
+  --primary-color: #2a2a72;
+  --secondary-color: #009ffd;
+  --accent-color: #ff6b6b;
+}
+
+/* General Styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+}
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  background-color: #F4E1C1;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #F0D1A0;
+  transition: background-color 0.3s ease;
+}
+
+/* Logo Styling */
+.navbar .logo a {
+  font-size: 2rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: #4B4B4B;
+  text-decoration: none;
+  letter-spacing: 2px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar .logo a:hover {
+  color: #7B4B3A;
+  transform: translateY(-2px);
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+}
+
+/* Styling for Navigation List Items */
+.nav-links li {
+  margin-left: 2rem;
+  position: relative;
+  opacity: 0;
+  animation: fadeIn 0.6s forwards;
+  animation-delay: 0.2s;
+}
+
+.nav-links li:nth-child(1) {
+  animation-delay: 0.3s;
+}
+.nav-links li:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.nav-links li:nth-child(3) {
+  animation-delay: 0.5s;
+}
+.nav-links li:nth-child(4) {
+  animation-delay: 0.6s;
+}
+.nav-links li:nth-child(5) {
+  animation-delay: 0.7s;
+}
+
+/* Link Styling */
+.nav-links li a {
+  color: #4B4B4B;
+  font-size: 1.1rem;
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+/* Hover Effects for Links */
+.nav-links li a:hover {
+  color: #FFF;
+  background-color: #7B4B3A;
+  transform: translateY(-3px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Active Link Styling */
+.nav-links li a.active {
+  color: #FFF;
+  background-color: #7B4B3A;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Animation for Navbar Links */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.8rem 1.5rem;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #F4E1C1;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-links li {
+    margin: 1rem 0;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .navbar .logo {
+    font-size: 1.8rem;
+  }
+  .cart-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #FF6F61;
+    color: white;
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  /* Hamburger Icon for Mobile */
+  .hamburger {
+    display: block;
+    cursor: pointer;
+  }
+
+  .hamburger div {
+    width: 30px;
+    height: 4px;
+    margin: 5px 0;
+    background-color: #4B4B4B;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+  }
+}
+
+/* Hero Section */
+.hero {
+  height: 90vh;
+  background: linear-gradient(to right, rgba(160, 82, 45, 0.8), rgba(255, 69, 0, 0.8)), url('/Photo/4419157.jpg') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #FFF8DC;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.hero .btn {
+  padding: 1rem 2rem;
+  margin: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: transform 0.3s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.hero .primary-btn {
+  background: #FF4500;
+  color: #FFF8DC;
+}
+
+.hero .secondary-btn {
+  background: #A0522D;
+  color: #FFF8DC;
+}
+
+.hero .btn:hover {
+  transform: scale(1.1);
+  background: #D2B48C;
+  color: #2F4F4F;
+}
+
+/* Featured Section */
+.featured {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(to right, rgba(243, 216, 163, 0.7), rgba(250, 172, 27, 0.5)), url('/Photo/waffles-with-chocolate-coffee-cup-paper-cutout-light-bulb-with-text-chalkboard.jpg') no-repeat center center/cover;
+}
+
+.specialties-heading {
+  font-size: 3rem;
+  font-family: 'Poppins', sans-serif;
+  color: #4B4B4B;
+  margin-bottom: 3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+/* Animation for heading */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.featured-items {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding-top: 2rem;
+}
+
+.featured-item {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease-in-out;
+  background-color: #FFF;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform: scale(0.95);
+}
+
+.featured-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease-in-out;
+}
+
+.featured-item:hover img {
+  transform: scale(1.1);
+}
+
+.item-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: #FFF;
+  border-radius: 0 0 12px 12px;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.3s ease-in-out;
+  transition-delay: 0.3s;
+}
+
+.featured-item:hover .item-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.item-info h3 {
+  font-size: 1.8rem;
+  font-family: 'Roboto', sans-serif;
+  color: #FFF;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.item-info p {
+  font-size: 1.1rem;
+  font-family: 'Roboto', sans-serif;
+  color: #FFF;
+  font-weight: 400;
+}
+
+.featured-item:hover {
+  transform: translateY(-10px) rotateY(10deg) scale(1.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Fade-in effect for each featured item */
+.featured-item {
+  animation: fadeInItem 1s ease-out forwards;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: transform 0.5s ease-in-out;
+}
+
+@keyframes fadeInItem {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover Animation on Featured Items */
+.featured-item:hover {
+  transform: scale(1.05) rotate(5deg);
+  transition: all 0.5s ease-in-out;
+}
+
+.featured-item img {
+  transition: transform 0.5s ease-out;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .featured-items {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .featured-item {
+    width: 90%;
+    height: 350px;
+  }
+}
+
+/* Testimonials Section */
+.testimonials {
+  text-align: center;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(250, 172, 27, 0.5)), url('/Photo/BG3.jpg') no-repeat center center/cover;
+  padding: 5rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonials::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.testimonials h2 {
+  font-size: 3.5rem;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  margin-bottom: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: slideIn 1s ease-out forwards;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.testimonial-slider {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+.testimonial {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  transition: all 0.4s ease-in-out;
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeIn 1s ease-in-out forwards;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.testimonial-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 3;
+}
+
+.customer-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1.5rem;
+  transition: transform 0.3s ease-in-out;
+  position: relative;
+}
+
+.customer-details h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.star-rating {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.star {
+  font-size: 3rem;
+  color: #FFD700;
+  transition: transform 0.3s ease-in-out, color 0.3s ease;
+}
+
+.star:hover {
+  transform: scale(1.3);
+  color: #FF6347;
+}
+
+.testimonial p {
+  font-size: 1.1rem;
+  color: #555;
+  font-family: 'Roboto', sans-serif;
+  margin-top: 1rem;
+  line-height: 1.6;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.testimonial:hover {
+  transform: translateY(-15px) scale(1.05) rotate(5deg);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 3;
+}
+
+/* Flip Card Animation */
+@keyframes flipCard {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+.testimonial:hover .customer-photo {
+  transform: scale(1.1);
+}
+
+.testimonial:hover .star {
+  transform: scale(1.4);
+}
+
+.testimonial:hover .testimonial-info h4 {
+  transform: translateY(-5px);
+}
+
+.testimonial:hover p {
+  transform: scale(1.05);
+  color: #333;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .testimonial-slider {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .testimonial {
+    width: 90%;
+    max-width: 400px;
+  }
+}
+
+/* Footer */
+.footer {
+  background-color: #333333;
+  color: #ffffff;
+  padding: 3rem 2rem;
+  text-align: center;
+  border-top: 3px solid #f8b400;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.footer-column {
+  width: 100%;
+  max-width: 320px;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.footer-column h3 {
+  font-size: 1.5rem;
+  color: #f8b400;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.footer-column p {
+  font-size: 1rem;
+  color: #e0e0e0;
+  line-height: 1.6;
+  margin-top: 0.5rem;
+}
+
+.about-us p {
+  font-size: 1rem;
+  font-style: italic;
+  color: #e0e0e0;
+  line-height: 1.8;
+  margin-top: 1rem;
+  text-align: justify;
+}
+
+.footer-bottom {
+  background-color: #212121;
+  padding: 1rem;
+}
+
+.footer-bottom p {
+  font-size: 0.9rem;
+  color: #e0e0e0;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-column {
+    width: 80%;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .footer-column p {
+    text-align: center;
+  }
+}
+
+/* Additional Styles */
+.animated-element {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+  background: var(--accent-color);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+

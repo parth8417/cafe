@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - Coffee House</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --neon-glow: #00ff88;
+            --glass-bg: rgba(25, 31, 45, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-light: #ECF0F1;
+            --text-dark: #2C3E50;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2236 0%, #2C3E50 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .confirmation-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--glass-bg);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .success-icon {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .success-icon i {
+            font-size: 5rem;
+            color: var(--neon-glow);
+            animation: pulse 2s infinite;
+        }
+
+        .order-details {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: var(--neon-glow);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .order-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .info-box h4 {
+            color: var(--neon-glow);
+            margin: 0 0 1rem 0;
+        }
+
+        .info-box p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .delivery-status {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .status-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .status-step::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: -50%;
+            width: 100%;
+            height: 2px;
+            background: var(--glass-border);
+            z-index: 1;
+        }
+
+        .status-step:first-child::before {
+            display: none;
+        }
+
+        .step-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            border: 2px solid var(--neon-glow);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-icon.active {
+            background: var(--neon-glow);
+            color: var(--text-dark);
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        .step-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--neon-glow);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .timeline {
+            position: relative;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 15px;
+        }
+
+        .timeline-entry {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--neon-glow);
+            border-radius: 50%;
+            margin-top: 0.5rem;
+            box-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-time {
+            font-size: 0.9rem;
+            color: var(--neon-glow);
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-text {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        .estimated-delivery {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 15px;
+            border: 1px solid var(--neon-glow);
+        }
+
+        .estimated-delivery h3 {
+            color: var(--neon-glow);
+            margin-bottom: 1rem;
+        }
+
+        .delivery-time {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            text-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-container">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        
+        <div class="order-details">
+            <h2 class="section-title">
+                <i class="fas fa-shopping-bag"></i> Order Confirmation
+            </h2>
+            <div class="order-info">
+                <div class="info-box">
+                    <h4>Order Details</h4>
+                    <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+                    <p><strong>Date:</strong> <span id="orderDate"></span></p>
+                    <p><strong>Payment Method:</strong> <span id="paymentMethod"></span></p>
+                    <p><strong>Total Amount:</strong> <span id="totalAmount"></span></p>
+                </div>
+                <div class="info-box">
+                    <h4>Customer Details</h4>
+                    <div id="customerDetails"></div>
+                </div>
+                <div class="info-box">
+                    <h4>Delivery Address</h4>
+                    <div id="deliveryAddress"></div>
+                </div>
+            </div>
+
+            <div class="delivery-status">
+                <div class="status-step">
+                    <div class="step-icon active">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-label">Order Confirmed</div>
+                </div>
+                <div class="status-step">
+                    <div class="step-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <div class="step-label">Preparing</div>
+                </div>
+                <div class="status-step">
+                    <div class="step-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="step-label">Out for Delivery</div>
+                </div>
+                <div class="status-step">
+                    <div class="step-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="step-label">Delivered</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="estimated-delivery">
+            <h3><i class="fas fa-clock"></i> Estimated Delivery Time</h3>
+            <div class="delivery-time" id="deliveryTime">30-45 mins</div>
+            <p>Your order will arrive between <span id="deliveryWindow"></span></p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-entry">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time" id="orderTime"></div>
+                    <div class="timeline-text">Order placed successfully</div>
+                </div>
+            </div>
+            <div class="timeline-entry" style="animation-delay: 0.2s">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time" id="confirmTime"></div>
+                    <div class="timeline-text">Order confirmed by Coffee House</div>
+                </div>
+            </div>
+            <div class="timeline-entry" style="animation-delay: 0.4s">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-time" id="prepTime"></div>
+                    <div class="timeline-text">Order preparation started</div>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+
+    <script>
+        // Generate random order ID
+        function generateOrderId() {
+            return 'ORD' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        }
+
+        // Format date
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Fix initialization issue
+        document.addEventListener('DOMContentLoaded', () => {
+            const orderData = JSON.parse(localStorage.getItem('orderData'));
+            
+            if (!orderData) {
+                console.log('No order data found');
+                window.location.href = 'checkout.html';
+                return;
+            }
+
+            // Set order details
+            document.getElementById('orderId').textContent = generateOrderId();
+            document.getElementById('orderDate').textContent = formatDate(new Date());
+            document.getElementById('paymentMethod').textContent = orderData.paymentMethod;
+            document.getElementById('totalAmount').textContent = orderData.amount;
+            
+            // Add customer details
+            const customerInfo = `
+                <p><strong>Name:</strong> ${orderData.customerName}</p>
+                <p><strong>Email:</strong> ${orderData.email}</p>
+                <p><strong>Phone:</strong> ${orderData.phone}</p>
+            `;
+            
+            // Add address details with type
+            const addressInfo = `
+                <p><strong>Address Type:</strong> ${orderData.addressType}</p>
+                <p>${orderData.address}</p>
+            `;
+
+            document.getElementById('customerDetails').innerHTML = customerInfo;
+            document.getElementById('deliveryAddress').innerHTML = addressInfo;
+
+            // Start the delivery status animation
+            startDeliveryAnimation();
+            updateDeliveryTimes();
+        });
+
+        // Remove duplicate function declarations
+        function startDeliveryAnimation() {
+            const steps = document.querySelectorAll('.step-icon');
+            let currentStep = 0;
+
+            function activateNextStep() {
+                if (currentStep < steps.length) {
+                    steps[currentStep].classList.add('active');
+                    currentStep++;
+                    if (currentStep < steps.length) {
+                        setTimeout(activateNextStep, 2000);
+                    }
+                }
+            }
+
+            setTimeout(activateNextStep, 1000);
+        }
+
+        function updateDeliveryTimes() {
+            const now = new Date();
+            const deliveryStart = new Date(now.getTime() + 30 * 60000);
+            const deliveryEnd = new Date(now.getTime() + 45 * 60000);
+
+            const formatTime = (date) => {
+                return date.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+            };
+
+            document.getElementById('deliveryWindow').textContent = 
+                `${formatTime(deliveryStart)} - ${formatTime(deliveryEnd)}`;
+
+            // Update timeline times
+            document.getElementById('orderTime').textContent = formatTime(now);
+            document.getElementById('confirmTime').textContent = 
+                formatTime(new Date(now.getTime() + 5 * 60000));
+            document.getElementById('prepTime').textContent = 
+                formatTime(new Date(now.getTime() + 10 * 60000));
+        }
+    </script>
+</body>
+</html>

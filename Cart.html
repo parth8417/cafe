@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"="width=device-width, initial-scale=1.0">
+    <title>Your Cart - Coffee House</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f0e4d7, #fdfcf3);
+            color: #333;
+        }
+
+        .cart-section {
+            padding: 4rem 2rem;
+            background-color: #f9f9f9;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cart-header h2 {
+            font-size: 2.5rem;
+            color: #6b4226;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            animation: fadeInDown 1s ease;
+        }
+
+        .cart-header p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .cart-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 1s ease;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+            animation: slideInLeft 0.5s ease;
+        }
+
+        .item-image img {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+        }
+
+        .item-details {
+            flex-grow: 1;
+            margin-left: 1rem;
+        }
+
+        .item-details h3 {
+            font-size: 1.2rem;
+            color: #6b4226;
+            margin: 0;
+        }
+
+        .item-quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .item-quantity button {
+            background: #ff6347;
+            color: #fff;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .item-quantity span {
+            margin: 0 10px;
+            font-size: 1rem;
+        }
+
+        .item-price {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .remove-btn {
+            background: #ff6347;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cart-summary {
+            margin-top: 2rem;
+            text-align: right;
+            animation: fadeInUp 1s ease;
+        }
+
+        .cart-summary p {
+            margin: 0.5rem 0;
+            font-size: 1.2rem;
+        }
+
+        .total {
+            font-size: 1.5rem;
+            color: #6b4226;
+        }
+
+        .checkout-btn {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .empty-cart {
+            font-size: 1.5rem;
+            color: #6b4226;
+            text-align: center;
+            margin-top: 2rem;
+            animation: fadeIn 1s ease;
+        }
+
+        /* Enhanced Styles */
+        .cart-item {
+            transform: translateX(0);
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .cart-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .item-quantity button:hover {
+            transform: scale(1.1);
+            background: #ff4500;
+        }
+
+        .item-quantity button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(45deg, #28a745, #23923d);
+            transition: all 0.3s ease;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 25px;
+            margin-top: 1rem;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .empty-cart {
+            padding: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .remove-btn:hover {
+            background: #ff4500;
+            transform: scale(1.05);
+        }
+
+        .error-message {
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Loading indicator */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #6b4226;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Add new styles */
+        .cart-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .checkout-section {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 2rem 0 1rem;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
+            background: linear-gradient(135deg, #27ae60, #219a52);
+        }
+
+        .checkout-btn:active {
+            transform: translateY(1px);
+        }
+
+        .checkout-btn i {
+            font-size: 1.4rem;
+        }
+
+        /* Add pulsing animation for the lock icon */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .checkout-btn i {
+            animation: pulse 2s infinite;
+        }
+
+        .cart-notice {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .cart-notice i {
+            color: #27ae60;
+        }
+
+        .bill-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .total {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #eee;
+        }
+
+        .coupon-section {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .coupon-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .coupon-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        .apply-coupon-btn {
+            background: linear-gradient(135deg, #6b4226, #8B5E3C);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .apply-coupon-btn:hover {
+            background: linear-gradient(135deg, #8B5E3C, #6b4226);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(107, 66, 38, 0.2);
+        }
+
+        .apply-coupon-btn:active {
+            transform: translateY(0);
+        }
+
+        .apply-coupon-btn i {
+            font-size: 1.1rem;
+        }
+
+        .apply-coupon-btn.loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .apply-coupon-btn.loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .available-coupons {
+            margin-top: 1rem;
+        }
+
+        .coupon-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .coupon-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: white;
+            border: 1px dashed #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .coupon-item:hover {
+            background: #f0f0f0;
+            transform: translateX(5px);
+        }
+
+        .applied-coupon {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem;
+            background: #e8f5e9;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+
+        .discount-amount {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .remove-coupon-btn {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .remove-coupon-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .success-message {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .coupon-item {
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            border: 2px dashed #ddd;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coupon-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #6b4226;
+        }
+
+        .coupon-item.expired {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .flash-tag {
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .coupon-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .coupon-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">Coffee House</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="cart-section">
+        <div class="cart-header">
+            <h2>Your Shopping Cart</h2>
+            <p>Complete your coffee experience with our carefully curated selection. Each item is prepared with premium ingredients and crafted with passion.</p>
+        </div>
+        <div class="cart-container" id="cart-container">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-summary" id="cart-summary">
+            <!-- Summary will be dynamically added -->
+        </div>
+        <div class="empty-cart" id="empty-cart">
+            Your cart is empty. <a href="menu.html">Start shopping</a>.
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Panchal's Coffee House. All rights reserved.</p>
+    </footer>
+
+    <!-- Add loading indicator -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script>
+    // Cart initialization
+    let cartItems = [];
+    const cartContainer = document.getElementById('cart-container');
+    const cartSummary = document.getElementById('cart-summary');
+    const emptyCartMessage = document.getElementById('empty-cart');
+    const cartCountElement = document.getElementById('cart-count');
+    const TAX_RATE = 0.08;
+    const COUPON_CODES = {
+        'WELCOME10': { discount: 0.10, type: 'percentage', minAmount: 0, maxDiscount: 500 },
+        'SAVE20': { discount: 0.20, type: 'percentage', minAmount: 999, maxDiscount: 1000 },
+        'FLAT100': { discount: 100, type: 'fixed', minAmount: 500 },
+        'SPECIAL25': { discount: 0.25, type: 'percentage', minAmount: 1499, maxDiscount: 2000 }
+    };
+
+    // Debug function
+    function debugLog(message, data) {
+        console.log(`Debug: ${message}`, data);
+    }
+
+    // Add loading indicator functions
+    function showLoading() {
+        document.getElementById('loading').style.display = 'flex';
+    }
+
+    function hideLoading() {
+        document.getElementById('loading').style.display = 'none';
+    }
+
+    // Improved loadCart function with loading indicator
+    async function loadCart() {
+        showLoading();
+        try {
+            refreshCart();
+            await new Promise(resolve => setTimeout(resolve, 500));
+        } catch (error) {
+            console.error('Error loading cart:', error);
+            showError('Error loading cart. Please try again.');
+        } finally {
+            hideLoading();
+        }
+    }
+
+    // Update cart display
+    function updateCartDisplay() {
+        updateCartCount();
+        renderCart();
+    }
+
+    // Add item count update animation
+    function updateCartCount() {
+        const totalItems = cartItems.reduce((sum, item) => sum + (item?.quantity || 0), 0);
+        const element = cartCountElement;
+        element.style.transform = 'scale(1.2)';
+        element.textContent = totalItems;
+        setTimeout(() => {
+            element.style.transform = 'scale(1)';
+        }, 200);
+        debugLog('Updated cart count:', totalItems);
+    }
+
+    // Improved price formatting
+    function formatPrice(price) {
+        try {
+            const num = parseFloat(price);
+            console.log('Formatting price:', price, '->', num);
+            return !isNaN(num) ? `₹${num.toFixed(2)}` : '₹0.00';
+        } catch (error) {
+            console.error('Price formatting error:', error);
+            return '₹0.00';
+        }
+    }
+
+    // Add price validation
+    function isValidPrice(price) {
+        return !isNaN(price) && parseFloat(price) >= 0;
+    }
+
+    // Improved renderCart function
+    function renderCart() {
+        try {
+            debugLog('Starting cart render');
+            cartContainer.innerHTML = '';
+            cartSummary.innerHTML = '';
+
+            // Get fresh cart data
+            const savedCart = localStorage.getItem('cart');
+            console.log('Raw cart data:', savedCart);
+
+            if (!savedCart) {
+                emptyCartMessage.style.display = 'block';
+                cartSummary.style.display = 'none';
+                cartContainer.style.display = 'none';
+                return;
+            }
+
+            cartItems = JSON.parse(savedCart);
+            console.log('Parsed cart items:', cartItems);
+
+            if (!Array.isArray(cartItems) || cartItems.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                cartSummary.style.display = 'none';
+                cartContainer.style.display = 'none';
+                return;
+            }
+
+            emptyCartMessage.style.display = 'none';
+            cartSummary.style.display = 'block';
+            cartContainer.style.display = 'block';
+
+            let subtotal = 0;
+
+            cartItems.forEach((item, index) => {
+                const price = parseFloat(item.price);
+                const quantity = parseInt(item.quantity);
+
+                if (!item || !item.name || isNaN(price) || isNaN(quantity)) {
+                    console.error('Invalid item data:', item);
+                    return;
+                }
+
+                const itemTotal = price * quantity;
+                subtotal += itemTotal;
+
+                console.log('Processing item:', {
+                    name: item.name,
+                    price: price,
+                    quantity: quantity,
+                    total: itemTotal
+                });
+
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}" onerror="this.src='images/default-product.jpg'">
+                    </div>
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p>${formatPrice(price)} × ${quantity}</p>
+                    </div>
+                    <div class="item-quantity">
+                        <button onclick="updateQuantity(${index}, -1)" ${quantity <= 1 ? 'disabled' : ''}>-</button>
+                        <span>${quantity}</span>
+                        <button onclick="updateQuantity(${index}, 1)" ${quantity >= 99 ? 'disabled' : ''}>+</button>
+                    </div>
+                    <div class="item-price">${formatPrice(itemTotal)}</div>
+                    <button class="remove-btn" onclick="removeItem(${index})">Remove</button>`;
+
+                cartContainer.appendChild(itemElement);
+            });
+
+            const tax = Math.round(subtotal * TAX_RATE * 100) / 100;
+            const shippingCharge = subtotal >= 499 ? 0 : 100;
+            
+            // Get applied coupon
+            const appliedCoupon = JSON.parse(localStorage.getItem('appliedCoupon') || 'null');
+            let couponDiscount = 0;
+            
+            // Calculate coupon discount
+            if (appliedCoupon && COUPON_CODES[appliedCoupon.code]) {
+                const couponInfo = COUPON_CODES[appliedCoupon.code];
+                if (couponInfo.type === 'percentage') {
+                    couponDiscount = subtotal * couponInfo.discount;
+                    if (couponInfo.maxDiscount) {
+                        couponDiscount = Math.min(couponDiscount, couponInfo.maxDiscount);
+                    }
+                } else {
+                    couponDiscount = couponInfo.discount;
+                }
+            }
+
+            // Calculate final total
+            const total = subtotal + tax + shippingCharge;
+            const finalTotal = total - couponDiscount;
+
+            cartSummary.innerHTML = `
+                <div class="checkout-section">
+                    <div class="bill-item subtotal">
+                        <span>Subtotal:</span>
+                        <span>${formatPrice(subtotal)}</span>
+                    </div>
+                    <div class="bill-item tax">
+                        <span>Tax (${(TAX_RATE * 100)}%):</span>
+                        <span>${formatPrice(tax)}</span>
+                    </div>
+                    <div class="bill-item shipping">
+                        <span>Shipping:</span>
+                        <span>${shippingCharge === 0 ? 'Free' : formatPrice(shippingCharge)}</span>
+                    </div>
+                    <div class="coupon-section">
+                        <div class="coupon-input">
+                            <input type="text" 
+                                   id="coupon-code" 
+                                   placeholder="Enter coupon code" 
+                                   maxlength="10"
+                                   onkeyup="event.key === 'Enter' && applyCoupon()">
+                            <button onclick="applyCoupon()" class="apply-coupon-btn" id="apply-coupon-btn">
+                                <i class="fas fa-tag"></i>
+                                Apply
+                            </button>
+                        </div>
+                        <div class="available-coupons">
+                            <h4>Available Coupons:</h4>
+                            <div class="coupon-list">
+                                <div class="coupon-item" onclick="copyCoupon('WELCOME10')">
+                                    <span class="code">WELCOME10</span>
+                                    <span class="desc">10% off on your first order</span>
+                                </div>
+                                <div class="coupon-item" onclick="copyCoupon('SAVE20')">
+                                    <span class="code">SAVE20</span>
+                                    <span class="desc">20% off on orders above ₹999</span>
+                                </div>
+                                <!-- Add more coupons as needed -->
+                            </div>
+                        </div>
+                        ${appliedCoupon ? `
+                            <div class="applied-coupon">
+                                <span>Applied: ${appliedCoupon.code}</span>
+                                <span class="discount-amount">-${formatPrice(couponDiscount)}</span>
+                                <button onclick="removeCoupon()" class="remove-coupon-btn">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="bill-item total">
+                        <span>Final Total:</span>
+                        <span>${formatPrice(finalTotal)}</span>
+                    </div>
+                    <button class="checkout-btn" onclick="checkout()">
+                        <i class="fas fa-lock"></i>
+                        Secure Checkout (${cartItems.length} ${cartItems.length === 1 ? 'item' : 'items'})
+                    </button>
+                    <div class="cart-notice">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure transaction. 100% money-back guarantee.</span>
+                    </div>
+                    <div class="cart-notice">
+                        <i class="fas fa-truck"></i>
+                        <span>Free delivery for orders above ₹499</span>
+                    </div>
+                </div>
+            `;
+
+            debugLog('Cart render complete', { subtotal, tax, total });
+        } catch (error) {
+            console.error('Error rendering cart:', error);
+            showError('Error displaying cart. Please refresh the page.');
+        }
+    }
+
+    // Update quantity with improved validation
+    function updateQuantity(index, change) {
+        try {
+            if (index >= 0 && index < cartItems.length) {
+                const item = cartItems[index];
+                const newQuantity = parseInt(item.quantity) + change;
+                const price = parseFloat(item.price);
+
+                if (newQuantity >= 1 && newQuantity <= 99 && !isNaN(price)) {
+                    item.quantity = newQuantity;
+                    saveCart();
+                    updateCartDisplay();
+                    debugLog('Updated quantity', { item, newQuantity, price });
+                }
+            }
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+            showError('Failed to update quantity');
+        }
+    }
+
+    // Improved remove item with animation
+    function removeItem(index) {
+        try {
+            if (index >= 0 && index < cartItems.length) {
+                const itemElement = document.querySelectorAll('.cart-item')[index];
+                itemElement.style.transform = 'translateX(100%)';
+                itemElement.style.opacity = '0';
+
+                setTimeout(() => {
+                    const removedItem = cartItems.splice(index, 1)[0];
+                    saveCart();
+                    updateCartDisplay();
+                    debugLog('Removed item:', removedItem);
+                }, 300);
+            }
+        } catch (error) {
+            console.error('Error removing item:', error);
+            showError('Failed to remove item');
+        }
+    }
+
+    // Save cart to localStorage
+    function saveCart() {
+        try {
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+            debugLog('Cart saved to localStorage', cartItems);
+        } catch (error) {
+            console.error('Error saving cart:', error);
+            showError('Failed to save cart');
+        }
+    }
+
+    // Improved error message
+    function showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = message;
+        errorDiv.style.cssText = `
+            background: #ff6b6b;
+            color: white;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(255,107,107,0.2);
+        `;
+        cartContainer.insertBefore(errorDiv, cartContainer.firstChild);
+        setTimeout(() => {
+            errorDiv.style.opacity = '0';
+            setTimeout(() => errorDiv.remove(), 300);
+        }, 2700);
+    }
+
+    // Checkout function
+    function checkout() {
+        if (cartItems.length === 0) {
+            showError('Your cart is empty!');
+            return;
+        }
+        window.location.href = 'checkout.html';
+    }
+
+    // Add this function to refresh cart data
+    function refreshCart() {
+        try {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cartItems = JSON.parse(savedCart);
+                if (Array.isArray(cartItems)) {
+                    renderCart();
+                    updateCartCount();
+                } else {
+                    throw new Error('Invalid cart data format');
+                }
+            }
+        } catch (error) {
+            console.error('Error refreshing cart:', error);
+            cartItems = [];
+            localStorage.setItem('cart', '[]');
+            renderCart();
+        }
+    }
+
+    // Add this new function for coupon handling
+    function applyCoupon() {
+        const couponInput = document.getElementById('coupon-code');
+        const applyButton = document.getElementById('apply-coupon-btn');
+        const couponCode = couponInput.value.trim().toUpperCase();
+        
+        if (!couponCode) {
+            showError('Please enter a coupon code');
+            return;
+        }
+
+        // Add loading state
+        applyButton.classList.add('loading');
+        applyButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        
+        // Simulate processing delay
+        setTimeout(() => {
+            const couponInfo = COUPON_CODES[couponCode];
+            
+            if (!couponInfo) {
+                showError('Invalid coupon code');
+                resetApplyButton();
+                return;
+            }
+
+            const subtotal = cartItems.reduce((sum, item) => 
+                sum + (parseFloat(item.price) * item.quantity), 0);
+            
+            if (subtotal < couponInfo.minAmount) {
+                showError(`This coupon requires minimum purchase of ₹${couponInfo.minAmount}`);
+                resetApplyButton();
+                return;
+            }
+
+            let discountAmount = calculateDiscount(subtotal, couponInfo);
+
+            localStorage.setItem('appliedCoupon', JSON.stringify({
+                code: couponCode,
+                discount: discountAmount,
+                type: couponInfo.type,
+                value: couponInfo.discount
+            }));
+
+            couponInput.value = '';
+            showSuccess(`Coupon applied successfully! Saved ${formatPrice(discountAmount)}`);
+            refreshCart();
+            resetApplyButton();
+        }, 800);
+    }
+
+    // Add this helper function
+    function resetApplyButton() {
+        const applyButton = document.getElementById('apply-coupon-btn');
+        applyButton.classList.remove('loading');
+        applyButton.innerHTML = '<i class="fas fa-tag"></i>Apply';
+    }
+
+    // Add this function for success messages
+    function showSuccess(message) {
+        const successDiv = document.createElement('div');
+        successDiv.className = 'success-message';
+        successDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+        successDiv.style.cssText = `
+            background: #28a745;
+            color: white;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(40,167,69,0.2);
+            animation: slideIn 0.3s ease;
+        `;
+        cartContainer.insertBefore(successDiv, cartContainer.firstChild);
+        setTimeout(() => {
+            successDiv.style.opacity = '0';
+            setTimeout(() => successDiv.remove(), 300);
+        }, 2700);
+    }
+
+    // Add these helper functions
+    function copyCoupon(code) {
+        navigator.clipboard.writeText(code).then(() => {
+            document.getElementById('coupon-code').value = code;
+            showSuccess('Coupon code copied!');
+        });
+    }
+
+    function removeCoupon() {
+        localStorage.removeItem('appliedCoupon');
+        refreshCart();
+        showSuccess('Coupon removed successfully!');
+    }
+
+    // Add this function to calculate coupon discount
+    function calculateDiscount(subtotal, couponInfo) {
+        if (couponInfo.type === 'percentage') {
+            let discount = subtotal * couponInfo.discount;
+            return Math.min(discount, couponInfo.maxDiscount || discount);
+        }
+        return couponInfo.discount;
+    }
+
+    // Initialize cart when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        debugLog('DOM loaded, initializing cart', null);
+        loadCart();
+    });
+
+    // Listen for storage changes
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'cart') {
+            debugLog('Storage changed, reloading cart', null);
+            loadCart();
+        }
+    });
+
+    // Add auto-refresh functionality
+    setInterval(refreshCart, 5000); // Refresh every 5 seconds
+
+    // Initial load
+    loadCart();
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Panchal's Coffee House</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">Coffee House</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Parth Panchal's Coffee House</h1>
+            <p>Your perfect place for delightful coffee and snacks</p>
+            <div class="hero-buttons">
+                <a href="menu.html" class="btn primary-btn">View Menu</a>
+                <a href="cart.html" class="btn secondary-btn">Order Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section class="featured">
+        <h2 class="specialties-heading">Our Specialties</h2>
+        <div class="featured-items">
+            <div class="featured-item">
+                <img src="/Photo/cappuccino.jpg" alt="Specialty Item 1">
+                <div class="item-info">
+                    <h3>Cappuccino</h3>
+                    <p>Rich and creamy, perfect for any time of the day.</p>
+                </div>
+            </div>
+            <div class="featured-item">
+                <img src="/Photo/special2.jpeg" alt="Specialty Item 2">
+                <div class="item-info">
+                    <h3>Blueberry Muffin</h3>
+                    <p>Soft, moist, and loaded with blueberries.</p>
+                </div>
+            </div>
+            <div class="featured-item">
+                <img src="/Photo/special3.jpeg" alt="Specialty Item 3">
+                <div class="item-info">
+                    <h3>Avocado Toast</h3>
+                    <p>A healthy and delicious breakfast option.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial-slider">
+            <div class="testimonial">
+                <div class="testimonial-info">
+                    <img src="/Customers/customer1.jpg" alt="Customer 1" class="customer-photo">
+                    <div class="customer-details">
+                        <h4>Alex</h4>
+                        <div class="star-rating">
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9734;</span>
+                        </div>
+                    </div>
+                </div>
+                <p>"The best coffee shop in town! Amazing ambiance and delicious food."</p>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-info">
+                    <img src="/Customers/customer2.jpg" alt="Customer 2" class="customer-photo">
+                    <div class="customer-details">
+                        <h4>Maria</h4>
+                        <div class="star-rating">
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9734;</span>
+                            <span class="star">&#9734;</span>
+                        </div>
+                    </div>
+                </div>
+                <p>"Absolutely love their desserts. Highly recommend the blueberry muffin."</p>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-info">
+                    <img src="/Customers/customer3.jpg" alt="Customer 3" class="customer-photo">
+                    <div class="customer-details">
+                        <h4>John</h4>
+                        <div class="star-rating">
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                        </div>
+                    </div>
+                </div>
+                <p>"Great place to relax and have a coffee. Friendly staff and great service!"</p>
+            </div>
+        </div>
+    </section>
+
+  <!-- Footer -->
+<div class="footer">
+    <div class="footer-container">
+        <!-- About Us Section -->
+        <div class="footer-column about-us">
+            <h3>About Us</h3>
+            <p>Welcome to Panchal's Coffee House, where we serve the finest coffee and fresh, delicious snacks. 
+                Our mission is to bring quality and comfort in every cup. Join us for a warm experience and amazing flavors.</p>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="footer-column contact-us">
+            <h3>Contact Us</h3>
+            <p>Email: info@panchalscoffeehouse.com</p>
+            <p>Phone: +1 234 567 890</p>
+            <p>Address: 123 Coffee St, City, Country</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Panchal's Coffee House. All rights reserved.</p>
+    </div>
+</div>
+
+<script>
+    // Update cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const totalItems = cart.reduce((sum, item) => sum + (item?.quantity || 0), 0);
+        document.getElementById('cart-count').textContent = totalItems;
+    });
+
+    // Listen for storage changes
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'cart') {
+            const cart = JSON.parse(e.newValue || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + (item?.quantity || 0), 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+    });
+</script>
+
+</body>
+
+</html>

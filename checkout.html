@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Coffee House</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --accent-color: #3498DB;
+            --neon-glow: #00ff88;
+            --glass-bg: rgba(25, 31, 45, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-light: #ECF0F1;
+            --text-dark: #2C3E50;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --grid-gap: 2rem;
+            --section-spacing: 3rem;
+            --input-height: 3.5rem;
+            --input-bg: rgba(255, 255, 255, 0.07);
+            --input-focus-bg: rgba(255, 255, 255, 0.1);
+            --label-color: rgba(236, 240, 241, 0.8);
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2236 0%, #2C3E50 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            padding: 2rem 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--glass-bg);
+            border-radius: 20px;
+        }
+
+        .checkout-form {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .form-section {
+            position: relative;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .form-section h3 {
+            position: absolute;
+            top: -1rem;
+            left: 2rem;
+            background: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 2rem;
+            height: var(--input-height);
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 0.5rem;
+            top: -0.8rem;
+            background: var(--primary-color);
+            padding: 0.2rem 0.8rem;
+            font-size: 0.85rem;
+            color: var(--neon-glow);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .form-group input,
+        .form-group select {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 90%;
+            height: 100%;
+            padding: 0 1.5rem;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group input:focus,
+        .form-group select option {
+            background-color: var(--primary-color); /* Background color for options */
+            color: var(--text-light); /* Text color for options */
+        }
+
+        .form-group input:focus + label,
+        .form-group select:focus + label {
+            color: var (--neon-glow);
+            transform: translateY(-2px);
+        }
+        
+
+        .address-type {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0 2rem 0;
+            justify-content: center;
+        }
+
+        .address-type-btn {
+            min-width: 120px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border-radius: 25px;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem 1.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .address-type-btn:hover {
+            background: var(--input-focus-bg);
+            transform: translateY(-2px);
+        }
+
+        .address-type-btn.selected {
+            background: var(--neon-glow);
+            color: var(--text-dark);
+            border-color: transparent;
+            font-weight: 600;
+        }
+
+        .payment-methods {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .payment-method {
+            display: grid;
+            grid-template-columns: 60px 1fr 40px;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: brightness(0) invert(1); /* Makes icons white */
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .payment-method:hover img {
+            transform: scale(1.1);
+            filter: brightness(0) invert(1) drop-shadow(0 0 5px var(--neon-glow));
+        }
+
+        .payment-method-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .payment-method-content strong {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+
+        .payment-method-content p {
+            margin: 0;
+            opacity: 0.7;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .payment-method input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--neon-glow);
+        }
+
+        .order-summary {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .order-summary h3 {
+            text-align: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            margin: 0;
+        }
+
+        .order-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+        }
+
+        .price-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .price-details div {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+        }
+
+        .total-amount {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var (--glass-border);
+        }
+
+        .place-order-btn {
+            margin-top: auto;
+            height: var(--input-height);
+            border-radius: 30px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--neon-glow), #00ba63);
+            color: var(--text-dark);
+            font-weight: 600;
+            padding: 1.2rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+            width: 100%;
+        }
+
+        .place-order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        /* Enhanced animations */
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px var(--neon-glow); }
+            50% { box-shadow: 0 0 20px var(--neon-glow), 0 0 30px var(--neon-glow); }
+            100% { box-shadow: 0 0 5px var(--neon-glow); }
+        }
+
+        .selected {
+            animation: glow 2s infinite;
+        }
+
+        /* Add scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-glow);
+            border-radius: 4px;
+        }
+
+        /* Modern input autofill style */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+            -webkit-text-fill-color: var(--text-light);
+            -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        @media (max-width: 1200px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+
+            .order-summary {
+                position: relative;
+                top: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .checkout-container {
+                padding: 1rem;
+            }
+
+            .checkout-form {
+                padding: 1.5rem;
+            }
+
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Fix responsive layout */
+        @media (max-width: 992px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .order-summary {
+                position: relative;
+                top: 0;
+                margin-top: 2rem;
+            }
+        }
+
+        /* Add active state for payment methods */
+        .payment-method.selected {
+            border-color: var(--neon-glow);
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        /* Add these input placeholder styles */
+        .form-group input::placeholder {
+            color: rgba(236, 240, 241, 0.4);
+        }
+
+        /* Add focus ring animation */
+        @keyframes focusRing {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            animation: focusRing 1.5s ease-out infinite;
+        }
+
+        /* Style select dropdown */
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300ff88' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.2em;
+            padding-right: 3rem;
+            cursor: pointer;
+        }
+
+        /* Fix select element height in Firefox */
+        @-moz-document url-prefix() {
+            .form-group select {
+                height: var(--input-height);
+            }
+        }
+
+        .phone-input {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            width: 105%;
+            height: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .phone-input:focus-within {
+            border-color: var(--neon-glow);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+            background: var(--input-focus-bg);
+        }
+
+        .phone-input select {
+            width: 120px;
+            height: 100%;
+            border: none;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--neon-glow);
+            padding: 0 8px;
+            font-size: 1rem;
+            border-right: 2px solid var(--glass-border);
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            position: relative;
+            z-index: 2;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .phone-input select:focus {
+            background: rgba(0, 255, 136, 0.1);
+            outline: none;
+        }
+
+        .phone-input select option {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 10px;
+        }
+
+        .phone-input::after {
+            content: '';
+            position: absolute;
+            left: 120px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 60%;
+            background: var(--neon-glow);
+            opacity: 0.3;
+            box-shadow: 0 0 8px var(--neon-glow);
+        }
+
+        .phone-input input {
+            position: relative;
+            flex: 1;
+            height: 100%;
+            border: none !important;
+            background: transparent !important;
+            padding: 0 15px !important;
+            color: var(--text-light);
+            font-size: 1rem;
+            outline: none;
+            z-index: 2;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .phone-input input:focus {
+            color: var(--neon-glow);
+        }
+
+        .phone-input input::placeholder {
+            color: rgba(236, 240, 241, 0.4);
+            letter-spacing: 0;
+        }
+
+        /* Add this new animation for the phone input */
+        @keyframes glowBorder {
+            0% { border-color: var(--glass-border); }
+            50% { border-color: var(--neon-glow); }
+            100% { border-color: var(--glass-border); }
+        }
+
+        .phone-input:focus-within {
+            animation: glowBorder 2s infinite;
+        }
+        /* Loading animation */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--primary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--neon-glow);
+            border-radius: 50%;
+            animation: spin 1s infinite linear;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Add these new styles for UPI form */
+        .upi-form {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .upi-form.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .upi-form input {
+            width: 92%;
+            height: var(--input-height);
+            padding: 0 1.5rem;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .upi-form button {
+            width: 100%;
+            height: var(--input-height);
+            background: var(--neon-glow);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upi-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Add these new styles for card form */
+        .card-form {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .card-form.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .card-form .form-row {
+            display: grid;
+            grid-template-columns: 3fr 1fr; /* Change from 1fr 1fr to 3fr 1fr */
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-form input {
+            width: 92%;
+            height: var(--input-height);
+            padding: 0 1.5rem;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .card-form .card-number {
+            grid-column: 1 / -1;
+        }
+
+        .card-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Add new styles for expiry input */
+        .card-form .expiry-group {
+            width: 100%;
+        }
+
+        .card-form .expiry-group input {
+            width: 70%;
+            text-align: center;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Include your header/navbar here -->
+
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="checkout-container">
+        <div class="checkout-form">
+            <form id="checkoutForm" onsubmit="handleSubmit(event)">
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> Contact Information</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <div class="phone-input">
+                                <select id="countryCode" name="countryCode" required>
+                                    <option value="+91">🇮🇳 +91</option>
+                                    <option value="+1">🇺🇸 +1</option>
+                                    <option value="+44">🇬🇧 +44</option>
+                                    <option value="+86">🇨🇳 +86</option>
+                                    <option value="+81">🇯🇵 +81</option>
+                                    <option value="+49">🇩🇪 +49</option>
+                                    <option value="+33">🇫🇷 +33</option>
+                                    <option value="+7">🇷🇺 +7</option>
+                                </select>
+                                <input type="tel" 
+                                       id="phone" 
+                                       name="phone"
+                                       pattern="[0-9-]{12}"
+                                       placeholder="Enter phone number"
+                                       maxlength="12"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> Delivery Address</h3>
+                    <div class="address-type">
+                        <button type="button" class="address-type-btn selected" onclick="selectAddressType('home')">
+                            <i class="fas fa-home"></i> Home
+                        </button>
+                        <button type="button" class="address-type-btn" onclick="selectAddressType('work')">
+                            <i class="fas fa-building"></i> Work
+                        </button>
+                        <button type="button" class="address-type-btn" onclick="selectAddressType('other')">
+                            <i class="fas fa-map-pin"></i> Other
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="streetAddress">Street Address</label>
+                        <input type="text" id="streetAddress" required>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <select id="state" required>
+                                <option value="">Select State</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <!-- Add more states -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pincode">Pincode</label>
+                            <input type="text" id="pincode" pattern="[0-9]{6}" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-credit-card"></i> Payment Method</h3>
+                    <div class="payment-methods">
+                        <div class="payment-method" onclick="selectPayment('upi')">
+                            <img src="images/upi.png" alt="UPI">
+                            <div>
+                                <strong>UPI Payment</strong>
+                                <p>Pay using UPI apps</p>
+                            </div>
+                            <input type="radio" name="payment" value="upi" required>
+                        </div>
+                        <!-- Add UPI form here -->
+                        <div class="upi-form" id="upiForm">
+                            <input type="text" 
+                                   id="upiId" 
+                                   placeholder="Enter UPI ID (e.g., name@upi)"
+                                   pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+"
+                                   required>
+                            <button type="button" onclick="verifyUpiPayment()">Pay Now</button>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment('card')">
+                            <img src="images/card-icon.png" alt="Card">
+                            <div>
+                                <strong>Card Payment</strong>
+                                <p>Pay using Credit or Debit card</p>
+                            </div>
+                            <input type="radio" name="payment" value="card">
+                        </div>
+                        
+                        <!-- Add Card form here -->
+                        <div class="card-form" id="cardForm">
+                            <div class="form-group card-number">
+                                <label for="cardNumber">Card Number</label>
+                                <input type="text" 
+                                       id="cardNumber" 
+                                       placeholder="1234 5678 9012 3456"
+                                       maxlength="19"
+                                       required>
+                                <img src="images/card-icon.png" alt="card" class="card-icon" id="cardIcon">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cardName">Cardholder Name</label>
+                                    <input type="text" 
+                                           id="cardName" 
+                                           placeholder="Name on card"
+                                           required>
+                                </div>
+                                <div class="form-group expiry-group">
+                                    <label for="expiry">Expiry</label>
+                                    <input type="text" 
+                                           id="expiry" 
+                                           placeholder="MM/YY"
+                                           maxlength="5"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="form-group cvv-group">
+                                <label for="cvv">CVV</label>
+                                <input type="password" 
+                                       id="cvv" 
+                                       placeholder="***"
+                                       maxlength="3"
+                                       required>
+                            </div>
+                            <button type="button" class="place-order-btn" onclick="processCardPayment()">
+                                Pay Now
+                            </button>
+                        </div>
+                        
+                        <div class="payment-method" onclick="selectPayment('cod')">
+                            <img src="images/cod-icon.png" alt="COD">
+                            <div>
+                                <strong>Cash on Delivery</strong>
+                                <p>Pay when you receive your order</p>
+                            </div>
+                            <input type="radio" name="payment" value="cod">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div class="order-items" id="orderItems">
+                <!-- Order items will be populated by JavaScript -->
+            </div>
+            <div class="price-details" id="priceDetails">
+                <!-- Price details will be populated by JavaScript -->
+            </div>
+            <button class="place-order-btn" onclick="placeOrder()">
+                Place Order
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for handling the checkout process
+        let selectedAddressType = 'home';
+        let selectedPayment = '';
+
+        function selectAddressType(type) {
+            selectedAddressType = type;
+            document.querySelectorAll('.address-type-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+        }
+
+        function selectPayment(method) {
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            const upiForm = document.getElementById('upiForm');
+            const cardForm = document.getElementById('cardForm');
+            
+            paymentMethods.forEach(pm => {
+                pm.classList.remove('selected');
+                const radio = pm.querySelector('input[type="radio"]');
+                radio.checked = false;
+            });
+            
+            const selectedMethod = document.querySelector(`.payment-method input[value="${method}"]`).parentElement;
+            selectedMethod.classList.add('selected');
+            selectedMethod.querySelector('input[type="radio"]').checked = true;
+            
+            // Show/hide payment forms
+            upiForm.classList.remove('active');
+            cardForm.classList.remove('active');
+            
+            if (method === 'upi') {
+                upiForm.classList.add('active');
+            } else if (method === 'card') {
+                cardForm.classList.add('active');
+            }
+            
+            selectedPayment = method;
+        }
+
+        function createParticles(element) {
+            for(let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.cssText = `
+                    position: absolute;
+                    width: 4px;
+                    height: 4px;
+                    background: ${Math.random() > 0.5 ? 'var(--neon-color)' : '#fff'};
+                    border-radius: 50%;
+                    pointer-events: none;
+                `;
+                
+                element.appendChild(particle);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 1 + Math.random() * 2;
+                const x = Math.cos(angle) * velocity;
+                const y = Math.sin(angle) * velocity;
+                
+                particle.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${x * 50}px, ${y * 50}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 1000,
+                    easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                }).onfinish = () => particle.remove();
+            }
+        }
+
+        // Add parallax effect to payment methods
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('mousemove', (e) => {
+                const rect = method.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const xRotation = ((y - rect.height / 2) / rect.height) * 20;
+                const yRotation = ((x - rect.width / 2) / rect.width) * 20;
+                
+                method.style.transform = `perspective(1000px) rotateX(${-xRotation}deg) rotateY(${yRotation}deg) scale(1.05)`;
+            });
+            
+            method.addEventListener('mouseleave', () => {
+                method.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+
+        function loadOrderSummary() {
+            const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+            const orderItems = document.getElementById('orderItems');
+            const priceDetails = document.getElementById('priceDetails');
+            const appliedCoupon = JSON.parse(localStorage.getItem('appliedCoupon') || 'null');
+            
+            let subtotal = 0;
+            let html = '';
+
+            cartItems.forEach(item => {
+                const total = item.price * item.quantity;
+                subtotal += total;
+                html += `
+                    <div class="order-item">
+                        <span>${item.name} × ${item.quantity}</span>
+                        <span>₹${total.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+
+            orderItems.innerHTML = html;
+
+            const tax = subtotal * 0.05;
+            const shipping = subtotal >= 499 ? 0 : 50;
+            let couponDiscount = 0;
+
+            if (appliedCoupon && appliedCoupon.discount) {
+                couponDiscount = parseFloat(appliedCoupon.discount);
+            }
+
+            const total = subtotal + tax + shipping - couponDiscount;
+
+            let priceDetailsHTML = `
+                <div>
+                    <span>Subtotal</span>
+                    <span>₹${subtotal.toFixed(2)}</span>
+                </div>
+                <div>
+                    <span>Tax (5%)</span>
+                    <span>₹${tax.toFixed(2)}</span>
+                </div>
+                <div>
+                    <span>Shipping</span>
+                    <span>${shipping === 0 ? 'Free' : `₹${shipping.toFixed(2)}`}</span>
+                </div>`;
+
+            if (appliedCoupon && couponDiscount > 0) {
+                priceDetailsHTML += `
+                    <div class="coupon-discount">
+                        <span>Coupon Applied (${appliedCoupon.code})</span>
+                        <span class="discount-amount">-₹${couponDiscount.toFixed(2)}</span>
+                    </div>`;
+            }
+
+            priceDetailsHTML += `
+                <div class="total-amount">
+                    <span>Total</span>
+                    <span>₹${total.toFixed(2)}</span>
+                </div>`;
+
+            priceDetails.innerHTML = priceDetailsHTML;
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            // Handle form submission
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            data.addressType = selectedAddressType;
+            data.paymentMethod = selectedPayment;
+
+            console.log('Form Data:', data);
+            // You can now send this data to your server for processing
+        }
+
+        function saveOrderData(paymentMethod) {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = `${document.getElementById('streetAddress').value}, 
+                            ${document.getElementById('city').value}, 
+                            ${document.getElementById('state').value} - 
+                            ${document.getElementById('pincode').value}`;
+
+            // Get cart total from price details
+            const totalAmount = document.querySelector('.total-amount span:last-child').textContent;
+
+            const orderData = {
+                customerName: `${firstName} ${lastName}`,
+                email: email,
+                phone: phone,
+                address: address,
+                addressType: selectedAddressType,
+                paymentMethod: paymentMethod,
+                amount: totalAmount
+            };
+
+            localStorage.setItem('orderData', JSON.stringify(orderData));
+        }
+
+        function verifyUpiPayment() {
+            const upiId = document.getElementById('upiId').value;
+            const upiPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+$/;
+            
+            if (!upiPattern.test(upiId)) {
+                alert('Please enter a valid UPI ID');
+                return;
+            }
+
+            const loadingOverlay = document.querySelector('.loading-overlay');
+            loadingOverlay.classList.add('active');
+
+            // Simulate UPI payment verification
+            setTimeout(() => {
+                loadingOverlay.classList.remove('active');
+                saveOrderData('UPI Payment');
+                // Here you would typically redirect to a success page
+                window.location.href = 'order-confirmation.html';
+            }, 2000);
+        }
+
+        function processCardPayment() {
+            const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+            const cardName = document.getElementById('cardName').value;
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+
+            if (cardNumber.length !== 16) {
+                alert('Please enter a valid 16-digit card number');
+                return;
+            }
+
+            if (!/^[0-9]{2}\/[0-9]{2}$/.test(expiry)) {
+                alert('Please enter a valid expiry date (MM/YY)');
+                return;
+            }
+
+            if (cvv.length !== 3) {
+                alert('Please enter a valid 3-digit CVV');
+                return;
+            }
+
+            const loadingOverlay = document.querySelector('.loading-overlay');
+            loadingOverlay.classList.add('active');
+
+            // Simulate card payment processing
+            setTimeout(() => {
+                loadingOverlay.classList.remove('active');
+                saveOrderData('Card Payment');
+                window.location.href = 'order-confirmation.html';
+            }, 2000);
+        }
+
+        function placeOrder() {
+            const form = document.getElementById('checkoutForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            if (selectedPayment === 'upi') {
+                verifyUpiPayment();
+            } else if (selectedPayment === 'card') {
+                processCardPayment();
+            } else {
+                // Handle COD
+                const loadingOverlay = document.querySelector('.loading-overlay');
+                loadingOverlay.classList.add('active');
+                
+                setTimeout(() => {
+                    loadingOverlay.classList.remove('active');
+                    saveOrderData('Cash on Delivery');
+                    alert('Order placed successfully!');
+                    window.location.href = 'order-confirmation.html';
+                }, 2000);
+            }
+        }
+
+        // Add smooth scroll to form sections
+        document.querySelectorAll('.form-section h3').forEach(header => {
+            header.addEventListener('click', () => {
+                header.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', loadOrderSummary);
+
+        // Format phone number as user types
+        document.getElementById('phone').addEventListener('input', function(e) {
+            // Remove any non-numeric characters
+            let value = e.target.value.replace(/\D/g, '');
+            
+            // Limit to 10 digits
+            value = value.substring(0, 10);
+            
+            // Format with dashes
+            if (value.length > 3 && value.length <= 6) {
+                value = value.slice(0,3) + "-" + value.slice(3);
+            } else if (value.length > 6) {
+                value = value.slice(0,3) + "-" + value.slice(3,6) + "-" + value.slice(6);
+            }
+            
+            e.target.value = value;
+        });
+
+        // Handle country code selection
+        document.getElementById('countryCode').addEventListener('change', function(e) {
+            const phoneInput = document.getElementById('phone');
+            phoneInput.value = ''; // Clear phone input when country changes
+        });
+
+        // Add card input formatting
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{4})/g, '$1 ').trim();
+            e.target.value = value;
+            
+            // Update card icon based on first digit
+            const firstDigit = value.charAt(0);
+            const cardIcon = document.getElementById('cardIcon');
+            if (firstDigit === '4') {
+                cardIcon.src = 'images/visa.png';
+            } else if (firstDigit === '5') {
+                cardIcon.src = 'images/mastercard.png';
+            } else {
+                cardIcon.src = 'images/card-icon.png';
+            }
+        });
+
+        document.getElementById('expiry').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 2) {
+                value = value.slice(0,2) + '/' + value.slice(2,4);
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>

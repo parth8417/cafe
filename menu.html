@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Panchal's Coffee House</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f7f0e7, #fdfaf4);
+            color: #333;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            background: url('/Photo/BG-menujpg.jpg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            animation: zoomIn 2s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 1.5s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(1.2); }
+            to { transform: scale(1); }
+        }
+
+        @keyframes fadeInDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Category Filter */
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            animation: slideIn 1s ease;
+        }
+
+        .category-buttons button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category-buttons button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(255, 126, 95, 0.4);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Menu Section */
+        .menu-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+       /* Menu Item Cards */
+        .menu-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .menu-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-card:hover .menu-card-overlay {
+            opacity: 1;
+        }
+
+        .menu-card-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .menu-card-overlay p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .menu-card-overlay .price {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .menu-card-overlay button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            background: #FF6F61;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .menu-card-overlay button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(255, 111, 97, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #6b4226;
+            color: #fff;
+            padding: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">Coffee House</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Our Delicious Menu</h1>
+    </section>
+
+    <!-- Category Filter -->
+    <div class="category-buttons">
+        <button>All</button>
+        <button>Drinks</button>
+        <button>Desserts</button>
+        <button>Sandwiches</button>
+        <button>Specials</button>
+    </div>
+
+    <!-- Menu Section -->
+    <section class="menu-section">
+        <!-- Menu Items with Prices -->
+        <!-- Menu Items with Updated Random Prices -->
+<div class="menu-card">
+    <img src="/Photo/Latte.jpg" alt="Latte">
+    <div class="menu-card-overlay">
+        <h3>Latte</h3>
+        <p>A creamy blend of espresso and steamed milk.</p>
+        <p class="price">₹250</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+<div class="menu-card">
+    <img src="/Photo/ChocolateCake.jpg" alt="Chocolate Cake">
+    <div class="menu-card-overlay">
+        <h3>Chocolate Cake</h3>
+        <p>Rich and indulgent with a melt-in-your-mouth texture.</p>
+        <p class="price">₹350</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+<div class="menu-card">
+    <img src="/Photo/cappuccino.jpg" alt="Cappuccino">
+    <div class="menu-card-overlay">
+        <h3>Cappuccino</h3>
+        <p>Rich and creamy, perfect for any time of the day.</p>
+        <p class="price">₹280</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+<div class="menu-card">
+    <img src="/Photo/special2.jpeg" alt="Blueberry Muffin">
+    <div class="menu-card-overlay">
+        <h3>Blueberry Muffin</h3>
+        <p>Soft, moist, and loaded with blueberries.</p>
+        <p class="price">₹190</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+<div class="menu-card">
+    <img src="/Photo/special3.jpeg" alt="Avocado Toast">
+    <div class="menu-card-overlay">
+        <h3>Avocado Toast</h3>
+        <p>A healthy and delicious breakfast option.</p>
+        <p class="price">₹300</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+<!-- New Menu Items with Updated Random Prices -->
+<div class="menu-card">
+    <img src="/Photo/espresso.jpg" alt="Espresso">
+    <div class="menu-card-overlay">
+        <h3>Espresso</h3>
+        <p>A strong and bold shot of espresso.</p>
+        <p class="price">₹220</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+<div class="menu-card">
+    <img src="/Photo/creamyfrosting.jpg" alt="Carrot Cake">
+    <div class="menu-card-overlay">
+        <h3>Creamy Frosting</h3>
+        <p>Delicious and moist with a creamy frosting.</p>
+        <p class="price">₹240</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+<div class="menu-card">
+    <img src="/Photo/IcedCoffee.jpg" alt="Iced Coffee">
+    <div class="menu-card-overlay">
+        <h3>Iced Coffee</h3>
+        <p>Perfect for those warm days, served chilled.</p>
+        <p class="price">₹210</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+<div class="menu-card">
+    <img src="/Photo/Bagel.jpg" alt="Bagel">
+    <div class="menu-card-overlay">
+        <h3>Bagel</h3>
+        <p>Freshly baked bagels with cream cheese.</p>
+        <p class="price">₹230</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+<div class="menu-card">
+    <img src="/Photo/GranolaBar.jpg" alt="Granola Bar">
+    <div class="menu-card-overlay">
+        <h3>Granola Bar</h3>
+        <p>Healthy and crunchy with a touch of honey.</p>
+        <p class="price">₹200</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+<div class="menu-card">
+    <img src="/Photo/MangoCoconutSmoothie.jpg" alt="Mango Coconut Smoothie">
+    <div class="menu-card-overlay">
+        <h3>Mango Coconut Smoothie</h3>
+        <p>A tropical smoothie made with ripe mangoes and creamy coconut milk, perfect for a refreshing treat.</p>
+        <p class="price">₹260</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+<div class="menu-card">
+    <img src="/Photo/BaconMapleCroissant.jpg" alt="Bacon & Maple Croissant">
+    <div class="menu-card-overlay">
+        <h3>Bacon & Maple Croissant</h3>
+        <p>A unique savory-sweet croissant filled with crispy bacon and drizzled with maple syrup.</p>
+        <p class="price">₹320</p> <!-- Updated Random Price -->
+        <button>Add to Cart</button>
+    </div>
+</div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Panchal's Coffee House. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.menu-card button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const menuItem = this.closest('.menu-card');
+                    const itemName = menuItem.querySelector('h3').textContent;
+                    const priceText = menuItem.querySelector('.price').textContent;
+                    // Fix price parsing to handle ₹ symbol
+                    const itemPrice = parseFloat(priceText.replace(/[^\d.]/g, ''));
+                    const itemImage = menuItem.querySelector('img').src;
+
+                    console.log('Price text:', priceText);
+                    console.log('Parsed price:', itemPrice);
+
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const existingItemIndex = cart.findIndex(item => item.name === itemName);
+
+                    if (existingItemIndex >= 0) {
+                        cart[existingItemIndex].quantity += 1;
+                    } else {
+                        cart.push({
+                            name: itemName,
+                            price: itemPrice, // Store as number
+                            image: itemImage,
+                            quantity: 1
+                        });
+                    }
+
+                    console.log('Adding to cart:', {
+                        name: itemName,
+                        price: itemPrice,
+                        image: itemImage
+                    });
+
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    showNotification(`${itemName} (₹${itemPrice}) added to cart!`);
+                });
+            });
+
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + (item?.quantity || 0), 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        });
+    
+        // Listen for storage changes
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'cart') {
+                const cart = JSON.parse(e.newValue || '[]');
+                const totalItems = cart.reduce((sum, item) => sum + (item?.quantity || 0), 0);
+                document.getElementById('cart-count').textContent = totalItems;
+            }
+        });
+    </script>
+</body>
+</html>
